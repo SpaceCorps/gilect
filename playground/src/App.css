@@ -1,0 +1,204 @@
+/* CRM Dashboard Styles */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* Prevent body scroll, handle inside layout */
+}
+
+/* 
+   IMPORTANT: High contrast background to show off refraction.
+   Using a complex gradient mesh.
+*/
+body {
+    background: 
+        radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+    background-color: #1a1a1a;
+    background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop'); 
+    /* Using a real image for maximum glass refraction proof */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+.crm-dashboard {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    padding: 24px;
+    box-sizing: border-box;
+    gap: 24px;
+}
+
+/* Sidebar Glass */
+.sidebar {
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px !important; /* Override inline styles if needed */
+    border-radius: 24px !important;
+    gap: 24px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to right, #fff, #aaa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-item {
+    text-align: left;
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255,255,255,0.6) !important;
+    font-weight: 500 !important;
+    padding: 12px 16px !important;
+    border-radius: 12px !important;
+    transition: all 0.2s ease !important;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.05) !important;
+    color: white !important;
+}
+
+.nav-item.active {
+    background: rgba(255,255,255,0.1) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.user-profile {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto; /* Allow scrolling content */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.action-btn {
+    background: black !important; /* Solid button for contrast */
+    color: white;
+    border-radius: 100px !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.stat-card {
+    padding: 24px !important;
+    border-radius: 20px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.stat-delta {
+    font-size: 0.85rem;
+}
+
+.stat-delta.positive { color: #4ade80; }
+.stat-delta.negative { color: #f87171; }
+
+/* Content Split */
+.content-split {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    flex: 1;
+    min-height: 300px;
+}
+
+.chart-panel, .activity-panel {
+    border-radius: 24px !important;
+    padding: 24px !important;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #60a5fa;
+    border-radius: 50%;
+}
