@@ -1,6 +1,6 @@
 import React from "react";
 import type { MirrorItem } from "../core/MirrorContext";
-import { RoundedBox, useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import "./FastGlassMaterial"; // Register the shader
 
@@ -44,29 +44,17 @@ export const GlassPlane = ({ item, viewportSize, pxToWorld }: Props) => {
   return (
     <group position={[xWorld, yWorld, 0]}>
       {/* Main Glass Volume - Using Custom Fast Shader */}
-      <RoundedBox args={[wWorld, hWorld, 0.1]} radius={rWorld} smoothness={10}>
-        {/* @ts-ignore */}
+      <mesh>
+        <planeGeometry args={[wWorld, hWorld]} />
+        {/* @ts-expect-error: fastGlassMaterial is not in JSX intrinsic elements yet */}
         <fastGlassMaterial
           uTexture={bgTexture}
           uIor={-0.15} // Negative for "convex" lens feel
-          uColor={new THREE.Color("#ffffff")}
+          uColor={new THREE.Color("#000000")}
+          uSize={new THREE.Vector2(wWorld, hWorld)}
+          uRadius={rWorld}
         />
-      </RoundedBox>
-
-      {/* Outer Border / Glow Frame */}
-      <RoundedBox
-        args={[wWorld + 4 * pxToWorld, hWorld + 4 * pxToWorld, 0.05]} // Add ~4px border
-        radius={rWorld}
-        smoothness={32}
-        position={[0, 0, -0.06]} // Sit behind the glass
-      >
-        <meshBasicMaterial
-          color="white"
-          transparent
-          opacity={0.25}
-          blending={THREE.AdditiveBlending}
-        />
-      </RoundedBox>
+      </mesh>
     </group>
   );
 };
