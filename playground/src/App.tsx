@@ -17,11 +17,11 @@ function App() {
         <GlassPane className="sidebar">
           <div className="logo">💎 GILECT CRM</div>
           <nav>
-            <GlassButton className="nav-item active">Dashboard</GlassButton>
-            <GlassButton className="nav-item">Contacts</GlassButton>
-            <GlassButton className="nav-item">Deals</GlassButton>
-            <GlassButton className="nav-item">Analytics</GlassButton>
-            <GlassButton className="nav-item">Settings</GlassButton>
+            <button className="nav-item active">Dashboard</button>
+            <button className="nav-item">Contacts</button>
+            <button className="nav-item">Deals</button>
+            <button className="nav-item">Analytics</button>
+            <button className="nav-item">Settings</button>
           </nav>
           <div className="user-profile">
             <div className="avatar">JD</div>
@@ -63,9 +63,12 @@ function App() {
             <GlassPane className="chart-panel">
               <div className="panel-header">
                 <h3>Revenue Growth</h3>
-                <GlassButton style={{ fontSize: "0.8rem", padding: "4px 8px" }}>
+                <button
+                  className="glass-btn-override"
+                  style={{ fontSize: "0.8rem", padding: "4px 8px" }}
+                >
                   Yearly
-                </GlassButton>
+                </button>
               </div>
               <div className="chart-placeholder">
                 {/* SVG Line Chart Simulator */}
