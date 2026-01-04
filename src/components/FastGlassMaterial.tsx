@@ -8,7 +8,8 @@ const FastGlassMaterialImpl = shaderMaterial(
     uTexture: null,
     uResolution: new THREE.Vector2(0, 0),
     uIor: 0.1,
-    uColor: new THREE.Color("#ffffff"),
+    uColor: new THREE.Color("#000000"),
+    uTintStrength: 0.15,
     uOpacity: 1.0,
     uSize: new THREE.Vector2(1, 1),
     uRadius: 0.1,
@@ -31,6 +32,7 @@ const FastGlassMaterialImpl = shaderMaterial(
     uniform vec2 uResolution;
     uniform float uIor;
     uniform vec3 uColor;
+    uniform float uTintStrength;
     uniform float uOpacity;
     uniform vec2 uSize;
     uniform float uRadius;
@@ -107,12 +109,12 @@ const FastGlassMaterialImpl = shaderMaterial(
       // 5. Sample Texture
       vec4 refractedColor = texture2D(uTexture, vScreenUV + distortion);
 
-      // 6. Tinting logic
-      // Add a slight highlight at the edge
-      float edgeHighlight = smoothstep(-0.01, 0.0, d) * 0.3; // Tint edges
-      
-      vec3 finalColor = mix(refractedColor.rgb, uColor, 0.1);
-      finalColor += vec3(edgeHighlight);
+    // 6. Tinting logic
+    // Add a slight highlight at the edge
+    float edgeHighlight = smoothstep(-0.01, 0.0, d) * 0.3; // Tint edges
+    
+    vec3 finalColor = mix(refractedColor.rgb, uColor, uTintStrength);
+    finalColor += vec3(edgeHighlight);
 
       gl_FragColor = vec4(finalColor, 1.0);
     }

@@ -37,13 +37,26 @@ import { GlassPane } from 'gilect';
 
 function Card() {
   return (
-    <GlassPane className="card">
+    <GlassPane 
+      className="card"
+      tintColor="#000000"  // Hex color of the glass tint
+      tintStrength={0.15}  // 0 to 1 (opacity of the tint)
+      distortion={-0.15}   // Refraction amount (negative = convex)
+    >
       <h1>Hello Glass</h1>
       <p>This content floats above a refractive glass plane.</p>
     </GlassPane>
   );
 }
 ```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `tintColor` | string | `"#000000"` | Hex color to tint the glass. |
+| `tintStrength` | number | `0.15` | Opacity of the tint layer (0.0 - 1.0). |
+| `distortion` | number | `-0.15` | Refraction index/strength. |
 
 ## Development
 

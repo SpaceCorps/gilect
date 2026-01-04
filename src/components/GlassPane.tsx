@@ -2,7 +2,9 @@ import React, { useRef } from "react";
 import { useMirror } from "../core/useMirror";
 
 export interface GlassPaneProps extends React.HTMLAttributes<HTMLDivElement> {
-  // Add custom glass props here later (blur amount, color, etc)
+  tintColor?: string;
+  tintStrength?: number;
+  distortion?: number;
   blur?: number;
 }
 
@@ -10,10 +12,14 @@ export const GlassPane = ({
   children,
   className,
   style,
+  tintColor = "#000000",
+  tintStrength = 0.15,
+  distortion = -0.15,
+  blur,
   ...props
 }: GlassPaneProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  useMirror(ref);
+  useMirror(ref, { tintColor, tintStrength, distortion, blur });
 
   return (
     <div

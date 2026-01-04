@@ -7,6 +7,14 @@ export type MirrorItem = {
   element: HTMLElement;
   visible: boolean;
   borderRadius: number;
+  props: GlassProps;
+};
+
+export type GlassProps = {
+  tintColor?: string;
+  tintStrength?: number;
+  distortion?: number;
+  blur?: number;
 };
 
 export type MirrorConfig = {
@@ -17,9 +25,14 @@ export type MirrorConfig = {
 interface MirrorState {
   items: Record<string, MirrorItem>;
   config: MirrorConfig;
-  register: (id: string, element: HTMLElement) => void;
+  register: (id: string, element: HTMLElement, props: GlassProps) => void;
   unregister: (id: string) => void;
-  update: (id: string, rect: DOMRect, borderRadius: number) => void;
+  update: (
+    id: string,
+    rect: DOMRect,
+    borderRadius: number,
+    props: GlassProps
+  ) => void;
 }
 
 type MirrorStore = ReturnType<typeof createMirrorStore>;
@@ -28,7 +41,7 @@ const createMirrorStore = (initialConfig: MirrorConfig) =>
   createStore<MirrorState>((set) => ({
     items: {},
     config: initialConfig,
-    register: (id, element) =>
+    register: (id, element, props) =>
       set((state) => ({
         items: {
           ...state.items,
@@ -38,6 +51,7 @@ const createMirrorStore = (initialConfig: MirrorConfig) =>
             rect: element.getBoundingClientRect(),
             visible: true,
             borderRadius: 0,
+            props,
           },
         },
       })),
@@ -47,7 +61,7 @@ const createMirrorStore = (initialConfig: MirrorConfig) =>
         const { [id]: _removed, ...rest } = state.items;
         return { items: rest };
       }),
-    update: (id, rect, borderRadius) =>
+    update: (id, rect, borderRadius, props) =>
       set((state) => {
         const item = state.items[id];
         if (
@@ -56,14 +70,15 @@ const createMirrorStore = (initialConfig: MirrorConfig) =>
             item.rect.y === rect.y &&
             item.rect.width === rect.width &&
             item.rect.height === rect.height &&
-            item.borderRadius === borderRadius)
+            item.borderRadius === borderRadius &&
+            item.props === props) // Simple reference check mostly
         ) {
           return state;
         }
         return {
           items: {
             ...state.items,
-            [id]: { ...item, rect, borderRadius },
+            [id]: { ...item, rect, borderRadius, props },
           },
         };
       }),

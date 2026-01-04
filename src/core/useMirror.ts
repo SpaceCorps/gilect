@@ -2,8 +2,11 @@ import { useLayoutEffect, useEffect, useState } from "react";
 import { useMirrorStore } from "./MirrorContext";
 import { v4 as uuidv4 } from "uuid";
 
+import { GlassProps } from "./MirrorContext";
+
 export const useMirror = <T extends HTMLElement>(
-  ref: React.RefObject<T | null>
+  ref: React.RefObject<T | null>,
+  props: GlassProps = {}
 ) => {
   const [id] = useState(() => uuidv4());
   const register = useMirrorStore((state) => state.register);
@@ -12,10 +15,11 @@ export const useMirror = <T extends HTMLElement>(
 
   useLayoutEffect(() => {
     if (ref.current) {
-      register(id, ref.current);
+      register(id, ref.current, props);
     }
     return () => unregister(id);
-  }, [id, register, unregister, ref]);
+  }, [id, register, unregister, ref]); // Props changed? We might need to handle that.
+  // Actually, if props change, we should call update, not re-register.
 
   useEffect(() => {
     let cancel = false;
@@ -25,7 +29,7 @@ export const useMirror = <T extends HTMLElement>(
         const rect = ref.current.getBoundingClientRect();
         const computedStyle = window.getComputedStyle(ref.current);
         const borderRadius = parseFloat(computedStyle.borderRadius) || 0;
-        update(id, rect, borderRadius);
+        update(id, rect, borderRadius, props);
       }
       requestAnimationFrame(sync);
     };
@@ -33,5 +37,5 @@ export const useMirror = <T extends HTMLElement>(
     return () => {
       cancel = true;
     };
-  }, [id, update, ref]);
+  }, [id, update, ref, props]); //Added props dependency
 };
