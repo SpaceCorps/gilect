@@ -19,6 +19,14 @@ export const GlassPlane = ({
 }: Props) => {
   const { x, y, width, height } = item.rect;
 
+  console.log("GlassPlane Rendering:", {
+    id: item.id,
+    rect: item.rect,
+    wWorld: width * pxToWorld,
+    hWorld: height * pxToWorld,
+    bgTextureUrl,
+  });
+
   // Load texture for fake refraction
   const rawTexture = useTexture(bgTextureUrl);
 
@@ -52,7 +60,7 @@ export const GlassPlane = ({
         <fastGlassMaterial
           uTexture={bgTexture}
           uIor={-0.15} // Negative for "convex" lens feel
-          uColor={new THREE.Color("#000000")}
+          uColor={new THREE.Color("#ffffff")}
           uSize={new THREE.Vector2(wWorld, hWorld)}
           uRadius={rWorld}
         />
