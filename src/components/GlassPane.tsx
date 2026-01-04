@@ -20,7 +20,7 @@ export const GlassPane = ({
       ref={ref}
       className={className}
       style={{
-        position: "relative",
+        // position: "relative", // Removed to allow className="fixed" or other positioning to work. Defaulting to standard layout.
         // The DOM element itself should be transparent so we see the WebGL glass behind/integrated?
         // Actually, if WebGL is 'overlay' (z-index 9999), it will cover the DOM content.
         // We need WebGL to be UNDER the content if we want content to be readable on top of glass.

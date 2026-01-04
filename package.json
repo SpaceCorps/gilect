@@ -12,6 +12,7 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/gilect.js",
       "require": "./dist/gilect.umd.cjs"
     }
