@@ -1,7 +1,7 @@
 {
   "name": "@rorychad/gilect",
   "private": false,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "type": "module",
   "main": "./dist/gilect.umd.cjs",
