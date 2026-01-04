@@ -11,7 +11,7 @@ const stats = [
 
 function App() {
   return (
-    <GilectRoot>
+    <GilectRoot renderBackground={true}>
       <div className="crm-dashboard">
         {/* Sidebar */}
         <GlassPane className="sidebar">

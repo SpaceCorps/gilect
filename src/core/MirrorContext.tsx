@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useState } from "react";
 import { createStore, useStore } from "zustand";
 
 export type MirrorItem = {
@@ -9,8 +9,14 @@ export type MirrorItem = {
   borderRadius: number;
 };
 
+export type MirrorConfig = {
+  backgroundImage: string;
+  renderBackground: boolean;
+};
+
 interface MirrorState {
   items: Record<string, MirrorItem>;
+  config: MirrorConfig;
   register: (id: string, element: HTMLElement) => void;
   unregister: (id: string) => void;
   update: (id: string, rect: DOMRect, borderRadius: number) => void;
@@ -18,9 +24,10 @@ interface MirrorState {
 
 type MirrorStore = ReturnType<typeof createMirrorStore>;
 
-const createMirrorStore = () =>
+const createMirrorStore = (initialConfig: MirrorConfig) =>
   createStore<MirrorState>((set) => ({
     items: {},
+    config: initialConfig,
     register: (id, element) =>
       set((state) => ({
         items: {
@@ -36,7 +43,8 @@ const createMirrorStore = () =>
       })),
     unregister: (id) =>
       set((state) => {
-        const { [id]: _, ...rest } = state.items;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [id]: _removed, ...rest } = state.items;
         return { items: rest };
       }),
     update: (id, rect, borderRadius) =>
@@ -63,8 +71,14 @@ const createMirrorStore = () =>
 
 const MirrorContext = createContext<MirrorStore | null>(null);
 
-export const MirrorProvider = ({ children }: { children: React.ReactNode }) => {
-  const store = useRef(createMirrorStore()).current;
+export const MirrorProvider = ({
+  children,
+  config,
+}: {
+  children: React.ReactNode;
+  config: MirrorConfig;
+}) => {
+  const [store] = useState(() => createMirrorStore(config));
   return (
     <MirrorContext.Provider value={store}>{children}</MirrorContext.Provider>
   );

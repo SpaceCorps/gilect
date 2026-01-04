@@ -8,17 +8,19 @@ interface Props {
   item: MirrorItem;
   viewportSize: { width: number; height: number }; // In Pixels
   pxToWorld: number; // Conversion factor
+  bgTextureUrl: string;
 }
 
-// Same URL as OverlayCanvas
-const BG_URL =
-  "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop";
-
-export const GlassPlane = ({ item, viewportSize, pxToWorld }: Props) => {
+export const GlassPlane = ({
+  item,
+  viewportSize,
+  pxToWorld,
+  bgTextureUrl,
+}: Props) => {
   const { x, y, width, height } = item.rect;
 
   // Load texture for fake refraction
-  const rawTexture = useTexture(BG_URL);
+  const rawTexture = useTexture(bgTextureUrl);
 
   // Clone and configure texture efficiently
   const bgTexture = React.useMemo(() => {
